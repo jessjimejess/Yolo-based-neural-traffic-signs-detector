@@ -4,7 +4,7 @@ import shutil
 
 validation_subset = "validation"
 test_subset = "test"
-train_subset = "train"
+train_subset = "LISATS_SPLITTED"
 VALIDATIONPER = 15
 TESTPER = 15
 IMAGE_SET = 3500      # Final number of images for each set
@@ -41,8 +41,8 @@ def splitlisats():
             print("2")
             imagelist.remove(image)
             imagelist.remove(image.replace(".txt",".jpg"))
-            shutil.move("train/" + image, validation_subset)
-            shutil.move("train/" + image.replace(".txt",".jpg"), validation_subset)
+            shutil.move("LISATS_SPLITTED/" + image, validation_subset)
+            shutil.move("LISATS_SPLITTED/" + image.replace(".txt",".jpg"), validation_subset)
             
             
         f = open("objects_list/" + "validation.txt", "a")
@@ -64,13 +64,13 @@ def splittest():
         if ".jpg" in image:
             imagelist.remove(image)
             imagelist.remove(image.replace(".jpg",".txt"))
-            shutil.move("train/" + image, test_subset)
-            shutil.move("train/" + image.replace(".jpg",".txt"), test_subset)
+            shutil.move("LISATS_SPLITTED/" + image, test_subset)
+            shutil.move("LISATS_SPLITTED/" + image.replace(".jpg",".txt"), test_subset)
         else:
             imagelist.remove(image)
             imagelist.remove(image.replace(".txt",".jpg"))
-            shutil.move("train/" + image, test_subset)
-            shutil.move("train/" + image.replace(".txt",".jpg"), test_subset)
+            shutil.move("LISATS_SPLITTED/" + image, test_subset)
+            shutil.move("LISATS_SPLITTED/" + image.replace(".txt",".jpg"), test_subset)
             
             
         f = open("objects_list/" + "test.txt", "a")
@@ -129,8 +129,8 @@ def mainfunc():
    
     os.mkdir(validation_subset)
     os.mkdir(test_subset)
-    os.mkdir(train_subset)
-    movetrainset()
+    # os.mkdir(train_subset)
+    # movetrainset()
     splitlisats()
     splittest()
     writetraindata()

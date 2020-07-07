@@ -9,9 +9,7 @@ originalannotations2 = "LISATS\Annotations\Annotations\daySequence1"
 originalimageset3 = "LISATS\daySequence2/daySequence2/"
 originalannotations3 = "LISATS\Annotations\Annotations\daySequence2"
 
-greendir = "LISATS_SPLITTED/green"
-reddir = "LISATS_SPLITTED/red"
-orangedir = "LISATS_SPLITTED/orange"
+greendir = "LISATS_SPLITTED"
 imcodes = ["go", "stop", "warning"]
 HEIGHT = 960
 WIDTH = 1280
@@ -32,8 +30,8 @@ def annotationcalc(destino, splitted, categoria, imagepath):
     frameheigth = (y2 - y1)/HEIGHT
 
     class_ = classcalculation(categoria)
-    f = open(destino + "/" + categoria + "_" + imagepath.replace(".jpg",".txt"),"w")
-    f.write(str(class_) + " " + str(framex) + " " + str(framey) + " " + str(framewidth) + " " + str(frameheigth))
+    f = open(destino + "/" + imagepath.replace(".jpg",".txt"),"a")
+    f.write(str(class_) + " " + str(framex) + " " + str(framey) + " " + str(framewidth) + " " + str(frameheigth) + "\n")
 
 def readf(f, clase):
     lines = f.readlines()
@@ -50,14 +48,14 @@ def readf(f, clase):
             
                 if "stop" in categoria:
                     source = originalimageset + "/" + clase + "/" + "frames" + "/" + imagepath
-                    destino = reddir
+                    destino = greendir
 
                 if "warning" in categoria:
                     source = originalimageset + "/" + clase + "/" + "frames/" + imagepath
-                    destino = orangedir
+                    destino = greendir
 
                 annotationcalc(destino, splitted, categoria, imagepath)
-                shutil.copy(source, destino + "/" + categoria + "_" + imagepath)
+                shutil.copy(source, destino)
 
 def classcalculation(categoria):
     if "go" in categoria:
@@ -91,21 +89,21 @@ def readfdaysequence(f, seq):
             
                 if "stop" in categoria:
                     source = src + "/" + "frames" + "/" + imagepath
-                    destino = reddir
+                    destino = greendir
 
                 if "warning" in categoria:
                     source = src + "/" + "frames/" + imagepath
-                    destino = orangedir
-
+                    destino = greendir
+                print(destino, imagepath)
                 annotationcalc(destino, splitted, categoria, imagepath)
-                shutil.copy(source, destino + "/" + categoria + "_" + imagepath)
+                shutil.copy(source, destino)
 
 def mainfunction():
     
 
     os.makedirs(greendir)
-    os.mkdir(reddir)
-    os.mkdir(orangedir)
+    # os.mkdir(reddir)
+    # os.mkdir(orangedir)
     
     listaclases = os.listdir(originalannotations)
     

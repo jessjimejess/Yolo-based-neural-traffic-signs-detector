@@ -4,7 +4,7 @@ import shutil
 
 validation_subset = "validation_russian"
 test_subset = "test_russian"
-train_subset = "train_russian"
+train_subset = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield"
 VALIDATIONPER = 15
 TESTPER = 15
 IMAGE_SET = 3500
@@ -125,10 +125,10 @@ def moveall(imagelist, class_):
             shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image.replace(".txt",".jpg"), train_subset)
 
 def mainfunc():
-    os.mkdir(train_subset)
+    # os.mkdir(train_subset)
     os.mkdir(validation_subset)
     os.mkdir(test_subset)
-    movetrainset()
+    # movetrainset()
     splitvalidation()
     splittest()
     writetraindata()
