@@ -4,3 +4,6 @@ detection/3.jpg
 detection/kk.jpg
 detection/yolo_files/yolov3_last.weights
 detection/yolo_files/yolov3.cfg
+*.jpg
+*.pyc
+*.mp4

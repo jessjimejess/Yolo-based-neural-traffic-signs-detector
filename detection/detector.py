@@ -5,26 +5,16 @@ import time
 import threading
 import math
 
+# --------------------- Unitary test ----------------- 
+
 NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
 W_FILE = "C:/darknet/build/darknet/x64/backup/yolov3_last.weights"
-imgframe = "detection/2.jpg"
+imgframe = "detection/bb.jpg"
 threshold = 0.25
 
-def truncate(number, digits) -> float:
-    stepper = 10.0 ** digits
-    return math.trunc(stepper * number) / stepper
-# def thre():
-#     for output in layer_outputs:
-        
-#         for detection in output:
-#             scores = detection[5:]
-#             class_id = np.argmax(scores)
-#             confidence = scores[class_id]
-#             if(confidence > threshold):
-#                 dectdict = {"centerx":detection[0], "centery":detection[1], "sqwidth":detection[2], "sqheight":detection[3]}
-#                 foundectlist.append(dectdict)
+# --------------------- Unitary test -------------------
 
-def netbuild():
+def netbuild(NET_FILE, W_FILE):
     net = cv2.dnn.readNetFromDarknet(NET_FILE, W_FILE)
     net.setPreferableBackend(cv2.dnn.DNN_BACKEND_CUDA)
     net.setPreferableTarget(cv2.dnn.DNN_TARGET_CUDA)
@@ -48,11 +38,11 @@ def drawboxes(frame,foundectlist):
 
     
     cv2.imshow("polc", frame)
-    cv2.waitKey(0) 
+    cv2.waitKey(1) 
     
 
 def detection(net, output_layers, frame, threshold):
-    start = time.time()
+  
     dectdict = {}
     foundectlist = []
     
@@ -73,22 +63,24 @@ def detection(net, output_layers, frame, threshold):
             confidence = scores[class_id]
             start = time.time()
             if confidence > threshold:
+                print(confidence)
                 dectdict = {"centerx":detection[0], "centery":detection[1], "sqwidth":detection[2], "sqheight":detection[3]}
                 foundectlist.append(dectdict)
     
-    
-            
-    
     drawboxes(frame,foundectlist)
-    finish = time.time()
-    print(str(finish - start))
+    
     
 
-
+# ------------- Unitary test ----------------- #
 if __name__ == "__main__":
 
-    net, output_layers = netbuild()
-    frame = cv2.imread(imgframe)
+    net, output_layers = netbuild(NET_FILE, W_FILE)
     
-    detection(net, output_layers, frame, threshold)
+    cap = cv2.VideoCapture("detection/Granada.mp4")
+    while True:
+
+
+        ret, frame = cap.read()
+    
+        detection(net, output_layers, frame, threshold)
         
