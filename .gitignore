@@ -1,0 +1,6 @@
+
+*.pyc
+*.jpg
+*.mp4
+*.weights
+*.cfg
