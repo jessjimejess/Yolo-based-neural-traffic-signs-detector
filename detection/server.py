@@ -4,6 +4,7 @@ import numpy
 import struct
 import time
 from detector import netbuild, detection
+import zlib
 
 # ---------------- Yolo configuration ---------------------- #
 NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
@@ -29,19 +30,19 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         print("conected")
         
         while True:
+            imgsize = conn.recv(16)
 
-            stringimg = conn.recv(int(416*416*3))
+            stringimg = conn.recv(int(imgsize))
             
-            while len(stringimg) < int(416*416*3):
-                img = conn.recv(int(416*416*3))
+            
+            while len(stringimg) < int(imgsize):
+                img = conn.recv(int(imgsize))
                 stringimg += img
 
+            dd = zlib.decompressobj().decompress(stringimg)
             
-            data = numpy.fromstring(stringimg, dtype='uint8').reshape(416, 416, 3)  #Change for image size
+            data = numpy.fromstring(dd, dtype='uint8').reshape(416, 416, 3)  #Change for image size
             
-            start = time.time()
             detection(net, output_layers, data, threshold)
-            finish = time.time()
-            print(str(finish-start))
             
             conn.sendall(b'received')
