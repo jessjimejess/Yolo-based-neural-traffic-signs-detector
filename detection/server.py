@@ -31,18 +31,13 @@ with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
         
         while True:
             imgsize = conn.recv(16)
-
             stringimg = conn.recv(int(imgsize))
-            
             
             while len(stringimg) < int(imgsize):
                 img = conn.recv(int(imgsize))
                 stringimg += img
 
             dd = zlib.decompressobj().decompress(stringimg)
-            
             data = numpy.fromstring(dd, dtype='uint8').reshape(416, 416, 3)  #Change for image size
-            
             detection(net, output_layers, data, threshold)
-            
             conn.sendall(b'received')
