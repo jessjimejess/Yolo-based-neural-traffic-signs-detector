@@ -2,124 +2,72 @@ import os
 import shutil
 
 
-originalimageset = "LISATS\dayTrain/dayTrain"
-originalannotations = "LISATS\Annotations\Annotations\dayTrain"
-originalimageset2 = "LISATS\daySequence1/daySequence1/"
-originalannotations2 = "LISATS\Annotations\Annotations\daySequence1"
-originalimageset3 = "LISATS\daySequence2/daySequence2/"
-originalannotations3 = "LISATS\Annotations\Annotations\daySequence2"
+originalimageset = ["TS2010\SourceImages", "TS2011\SourceImages"]
+originalannotations = ["TS2010\SourceImages", "TS2011\SourceImages"]
 
-greendir = "LISATS_SPLITTED"
-imcodes = ["go", "stop", "warning"]
-HEIGHT = 960
-WIDTH = 1280
 
-def annotationcalc(destino, splitted, categoria, imagepath):
-    x1 = int(splitted[2])
-    y1 = int(splitted[3])
-    x2 = int(splitted[4])
-    y2 = int(splitted[5])
+greendir = "TS_SPLITTED"
+HEIGHT = 576
+WIDTH = 720
 
-    absx = (x2 + x1)/2.
-    absy = (y2 + y1)/2.
+def annotationcalc(destino, splitted, categoria):
 
-    framex = absx/WIDTH
-    framey = absy/HEIGHT
+    ansplitted = splitted.split("&")
+    
+    for annotation in ansplitted:
+        if "B02" in annotation:
+            index = annotation.find("(")
+            index2 = annotation.find(")")
+            cleanannotation = annotation[index:index2].replace("x=", "").replace("y=","").replace("w=","").replace("h=","").replace("(","").replace(")","")
+            splattributes = cleanannotation.split(",")
+            x1 = int(splattributes[0])
+            y1 = int(splattributes[1])
+            x2 = int(splattributes[0]) + int(splattributes[2])
+            y2 = int(splattributes[0]) + int(splattributes[3])
 
-    framewidth = (x2 - x1)/WIDTH
-    frameheigth = (y2 - y1)/HEIGHT
+            absx = (x2 + x1)/2.
+            absy = (y2 + y1)/2.
 
-    class_ = classcalculation(categoria)
-    f = open(destino + "/" + imagepath.replace(".jpg",".txt"),"a")
-    f.write(str(class_) + " " + str(framex) + " " + str(framey) + " " + str(framewidth) + " " + str(frameheigth) + "\n")
+            framex = absx/WIDTH
+            framey = absy/HEIGHT
 
-def readf(f, clase):
-    lines = f.readlines()
-    for i,line in enumerate(lines):
-        if i != 0:
-            splitted = line.split(";")
-            categoria = splitted[1].strip()
-            imagepath = splitted[0].strip().split("/")[1]
-        
-            if categoria in imcodes:
-                if "go" in categoria:
-                    source = originalimageset + "/" + clase + "/" + "frames/" + imagepath
-                    destino = greendir
+            framewidth = (x2 - x1)/WIDTH
+            frameheigth = (y2 - y1)/HEIGHT
+
+            class_ = categoria
+            f = open(destino.replace(".bmp",".txt"),"a")
+            f.write(str(class_) + " " + str(framex) + " " + str(framey) + " " + str(framewidth) + " " + str(frameheigth) + "\n")
+
+def mainprog():
+    classcount = 0
+    os.makedirs(greendir)
+
+    for i,annotationd in enumerate(originalannotations):
+
+        f = open(annotationd + "/sources.log")
+        lines = f.readlines()
+    
+        for line in lines:
+            splitted = line.split(" ")
+            annot = splitted[3]
+            imgpath = splitted[0].strip()
+            if i == 0:
+                destimgpath = "2010_" + splitted[0].strip()
+            else:
+                destimgpath = "2011_" + splitted[0].strip()
             
-                if "stop" in categoria:
-                    source = originalimageset + "/" + clase + "/" + "frames" + "/" + imagepath
-                    destino = greendir
-
-                if "warning" in categoria:
-                    source = originalimageset + "/" + clase + "/" + "frames/" + imagepath
-                    destino = greendir
-
-                annotationcalc(destino, splitted, categoria, imagepath)
-                shutil.copy(source, destino)
-
-def classcalculation(categoria):
-    if "go" in categoria:
-        class_ = 0
-        
-    if "stop" in categoria:
-        class_ = 1
-        
-    if "warning" in categoria:
-        class_ = 2
-
-    return class_
-
-
-def readfdaysequence(f, seq):
-    if seq == "1":
-        src = originalimageset2
-    else:
-        src = originalimageset3
-    lines = f.readlines()
-    for i,line in enumerate(lines):
-        if i != 0:
-            splitted = line.split(";")
-            categoria = splitted[1].strip()
-            imagepath = splitted[0].strip().split("/")[1]
-        
-            if categoria in imcodes:
-                if "go" in categoria:
-                    source = src +  "/" + "frames/" + imagepath
-                    destino = greendir
+            if "B02" in annot:
+                source = annotationd + "/" + imgpath
+                dest = greendir + "/" + destimgpath
+                classcount = classcount + 1
             
-                if "stop" in categoria:
-                    source = src + "/" + "frames" + "/" + imagepath
-                    destino = greendir
+                shutil.copy(source, dest)
+                annotationcalc(dest,annot,3)
 
-                if "warning" in categoria:
-                    source = src + "/" + "frames/" + imagepath
-                    destino = greendir
-                print(destino, imagepath)
-                annotationcalc(destino, splitted, categoria, imagepath)
-                shutil.copy(source, destino)
 
 def mainfunction():
-    
 
-    os.makedirs(greendir)
-    # os.mkdir(reddir)
-    # os.mkdir(orangedir)
-    
-    listaclases = os.listdir(originalannotations)
-    
-    
-    for clase in listaclases:
-        f = open(originalannotations + "/" + clase + "/" + "frameAnnotationsBOX.csv")
-        readf(f, clase)
-        
-    f = open(originalannotations2 + "/" + "frameAnnotationsBOX.csv")
-    readfdaysequence(f, "1")
-
-    f = open(originalannotations3 + "/" + "frameAnnotationsBOX.csv")
-    readfdaysequence(f, "2")
-    
-
-
+    mainprog()
 
 mainfunction()
 

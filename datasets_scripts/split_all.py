@@ -81,31 +81,31 @@ def mainprog():
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount1 = classcount1 + classcount1
+                classcount1 = classcount1 + 1
                 
             if "3_24" in signalcode and classcount2 <= classlimit:
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount2 = classcount2 + classcount2
+                classcount2 = classcount2 + 1
             
             if (signalcode == "4_2_1" or signalcode == "4_2_2" or signalcode == "4_2_3" or signalcode == "4_2_4" or signalcode == "4_2_5") and classcount3 <= classlimit :
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount3 = classcount3 + classcount3
+                classcount3 = classcount3 + 1
             
             if (signalcode == "4_1_1" or signalcode == "4_1_2" or signalcode == "4_1_3" or signalcode == "4_1_4" or signalcode == "4_1_5")  and classcount3 <= classlimit :
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount3 = classcount3 + classcount3
-
-            if signalcode[:2] == "1_" and classcount4 >= 0:
+                classcount3 = classcount3 + 1
+            
+            if signalcode[:2] == "1_" and classcount4 <= classlimit:
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount4 = classcount4 + classcount4
+                classcount4 = classcount4 + 1
 
             # if signalcode == "3_24_n40":
             #     source = originalimages + "/" + splitted[0].strip()
@@ -131,39 +131,40 @@ def mainprog():
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount5 = classcount5 + classcount5
+                classcount5 = classcount5 + 1
 
             if signalcode == "3_1" and classcount6 <= classlimit:
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount6 = classcount6 + classcount6
+                classcount6 = classcount6 + 1
 
             if signalcode == "2_5" and classcount7 <= classlimit:
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount7 = classcount7 + classcount7
+                classcount7 = classcount7 + 1
 
             annotationcalc(source, andd, splitted, signalcode)
             shutil.copy(source, dest)
 
+    print("\n1: ", classcount1,"\n2: ",classcount2,"\n3: ",classcount3,"\n4: ",classcount4,"\n5: ",classcount5,"\n6: ",classcount6,"\n7: ",classcount7)
 
 def classcalculation(signalcode):
     if signalcode == "5_19_1":
-        class_ = 3
+        class_ = 0
         
     if "3_24_" in signalcode:
-        class_ = 4
+        class_ = 1
     
     if signalcode == "4_2_1" or signalcode == "4_2_2" or signalcode == "4_2_3" or signalcode == "4_2_4" or signalcode == "4_2_5" :
-        class_ = 8
+        class_ = 2
 
     if signalcode == "4_1_1" or signalcode == "4_1_2" or signalcode == "4_1_3" or signalcode == "4_1_4" or signalcode == "4_1_5" :
-        class_ = 8
+        class_ = 2
 
     if signalcode[:2] == "1_":
-        class_ = 9
+        class_ = 3
 
     # if signalcode == "3_24_n40":
     #     class_ = 4
@@ -178,13 +179,13 @@ def classcalculation(signalcode):
     #     class_ = 4
 
     if signalcode == "2_4":
-        class_ = 5
+        class_ = 4
             
     if signalcode == "3_1":
-        class_ = 6
+        class_ = 5
 
     if signalcode == "2_5":
-        class_ = 7
+        class_ = 6
 
     return class_
 
