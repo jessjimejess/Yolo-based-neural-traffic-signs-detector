@@ -9,18 +9,6 @@ import time
 from detector import netbuild, detection
 
 
-
-
-# ---------------- Yolo configuration ---------------------- #
-NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
-W_FILE = "C:/darknet/build/darknet/x64/backup/yolov3_last.weights"
-threshold = 0.25
-
-# -------------- Socket configuration --------------------- #
-HOST = '192.168.1.102'
-PORT = 65432
-imgbuffer = 416*416*3
-
 compressed_image = b""
 
 # -- Thread function
@@ -73,6 +61,16 @@ def receiveAndDetect():
 
 
 if __name__ == "__main__":
+
+    # ---------------- Yolo configuration ---------------------- #
+    NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
+    W_FILE = "C:/darknet/build/darknet/x64/backup/yolov3_last.weights"
+    threshold = 0.25
+
+    # -------------- Socket configuration --------------------- #
+    HOST = '192.168.1.102'
+    PORT = 65432
+    imgbuffer = 416*416*3
     
     print("Main: initializing threads -")
     t = threading.Thread(name='thr1', target=detectWorker, args=(NET_FILE,W_FILE,threshold,HOST,PORT,imgbuffer))

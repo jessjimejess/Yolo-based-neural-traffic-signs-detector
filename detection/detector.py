@@ -5,14 +5,7 @@ import time
 import threading
 import math
 
-# --------------------- Unitary test ----------------- 
 
-NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
-W_FILE = "C:/darknet/build/darknet/x64/backup/yolov3_last.weights"
-imgframe = "detection/bb.jpg"
-threshold = 0.25
-
-# --------------------- Unitary test -------------------
 
 def netbuild(NET_FILE, W_FILE):
     net = cv2.dnn.readNetFromDarknet(NET_FILE, W_FILE)
@@ -71,8 +64,14 @@ def detection(net, output_layers, frame, threshold):
     
     
 
-# ------------- Unitary test ----------------- #
+# ---- Testing ---- #
 if __name__ == "__main__":
+
+
+    NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
+    W_FILE = "C:/darknet/build/darknet/x64/backup/yolov3_last.weights"
+    frame = "detection/bb.jpg"
+    threshold = 0.25
 
     net, output_layers = netbuild(NET_FILE, W_FILE)
     
