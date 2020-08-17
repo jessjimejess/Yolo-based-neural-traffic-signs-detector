@@ -5,7 +5,7 @@ import cv2
 
 originalannotations = "full-gt.csv"
 originalimages = "rtsd-frames"
-classlimit = 3500
+classlimit = 50000
 os.makedirs("RUSSIAN_ALL_TRAFFIC_SPLITTED/yield")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/speed")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/speed30")
@@ -16,13 +16,12 @@ os.makedirs("RUSSIAN_ALL_TRAFFIC_SPLITTED/yield")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/speed80")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/speed100")
 #os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/yield")
-# os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/prohib")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/stop")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/direction")
 # os.mkdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/danger")
 
-imcodes = ["5_19_1","3_24_n20","3_24_n30","3_24_50","3_24_n40","3_24_n60","3_24_n70","3_24_n80",
-            "3_24_n100","2_4","3_1", "2_5","4_2_1","4_2_2","4_2_3","4_2_4","4_2_5","4_1_1","4_1_2","4_1_3","4_1_4","4_1_5"]
+imcodes = ["5_19_1","3_24_n10","3_24_n20","3_24_n30","3_24_50","3_24_n40","3_24_n60","3_24_n70","3_24_n80","3_24_n90",
+            "3_24_n100","2_4", "2_5","4_2_1","4_2_2","4_2_3","4_2_4","4_2_5","4_1_1","4_1_2","4_1_3","4_1_4","4_1_5"]
 
 def annotationcalc(source, dest, splitted, signalcode):
     
@@ -95,7 +94,7 @@ def mainprog():
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
                 classcount3 = classcount3 + 1
             
-            if (signalcode == "4_1_1" or signalcode == "4_1_2" or signalcode == "4_1_3" or signalcode == "4_1_4" or signalcode == "4_1_5")  and classcount3 <= classlimit :
+            if (signalcode == "4_1_1" or signalcode == "4_1_2" or signalcode == "4_1_3" or signalcode == "4_1_4" or signalcode == "4_1_5" or signalcode == "4_3")  and classcount3 <= classlimit :
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
@@ -107,37 +106,31 @@ def mainprog():
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
                 classcount4 = classcount4 + 1
 
-            # if signalcode == "3_24_n40":
-            #     source = originalimages + "/" + splitted[0].strip()
-            #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed40/" + signalcode + splitted[0].strip()
-            #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed40/"
+            # # if signalcode == "3_24_n40":
+            # #     source = originalimages + "/" + splitted[0].strip()
+            # #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed40/" + signalcode + splitted[0].strip()
+            # #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed40/"
 
-            # if signalcode == "3_24_n60":
-            #     source = originalimages + "/" + splitted[0].strip()
-            #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed60/" + signalcode + splitted[0].strip()
-            #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed60/"
+            # # if signalcode == "3_24_n60":
+            # #     source = originalimages + "/" + splitted[0].strip()
+            # #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed60/" + signalcode + splitted[0].strip()
+            # #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed60/"
 
-            # if signalcode == "3_24_n80":
-            #     source = originalimages + "/" + splitted[0].strip()
-            #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed80/" + signalcode + splitted[0].strip()
-            #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed80/"
+            # # if signalcode == "3_24_n80":
+            # #     source = originalimages + "/" + splitted[0].strip()
+            # #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed80/" + signalcode + splitted[0].strip()
+            # #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed80/"
 
-            # if signalcode == "3_24_n100":
-            #     source = originalimages + "/" + splitted[0].strip()
-            #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed100/" + signalcode + splitted[0].strip()
-            #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed100/"
+            # # if signalcode == "3_24_n100":
+            # #     source = originalimages + "/" + splitted[0].strip()
+            # #     dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed100/" + signalcode + splitted[0].strip()
+            # #     andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/speed100/"
 
             if signalcode == "2_4" and classcount5 <= classlimit:
                 source = originalimages + "/" + splitted[0].strip()
                 dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
                 andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
                 classcount5 = classcount5 + 1
-
-            if signalcode == "3_1" and classcount6 <= classlimit:
-                source = originalimages + "/" + splitted[0].strip()
-                dest = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/" + splitted[0].strip()
-                andd = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield/"
-                classcount6 = classcount6 + 1
 
             if signalcode == "2_5" and classcount7 <= classlimit:
                 source = originalimages + "/" + splitted[0].strip()
@@ -148,7 +141,7 @@ def mainprog():
             annotationcalc(source, andd, splitted, signalcode)
             shutil.copy(source, dest)
 
-    print("\n1: ", classcount1,"\n2: ",classcount2,"\n3: ",classcount3,"\n4: ",classcount4,"\n5: ",classcount5,"\n6: ",classcount6,"\n7: ",classcount7)
+    print("\n0 peaton: ", classcount1,"\n1 velocidad: ",classcount2,"\n2 direccion: ",classcount3,"\n3 peligro: ",classcount4,"\n4 ceda el paso: ",classcount5,"\n5 stop: ",classcount7)
 
 def classcalculation(signalcode):
     if signalcode == "5_19_1":
@@ -166,26 +159,11 @@ def classcalculation(signalcode):
     if signalcode[:2] == "1_":
         class_ = 3
 
-    # if signalcode == "3_24_n40":
-    #     class_ = 4
-
-    # if signalcode == "3_24_n60":
-    #     class_ = 4
-
-    # if signalcode == "3_24_n80":
-    #     class_ = 4
-
-    # if signalcode == "3_24_n100":
-    #     class_ = 4
-
     if signalcode == "2_4":
         class_ = 4
-            
-    if signalcode == "3_1":
-        class_ = 5
 
     if signalcode == "2_5":
-        class_ = 6
+        class_ = 5
 
     return class_
 

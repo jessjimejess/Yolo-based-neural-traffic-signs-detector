@@ -7,7 +7,7 @@ test_subset = "test_russian"
 train_subset = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield"
 VALIDATIONPER = 15
 TESTPER = 15
-IMAGE_SET = 3500
+
 
 
 
