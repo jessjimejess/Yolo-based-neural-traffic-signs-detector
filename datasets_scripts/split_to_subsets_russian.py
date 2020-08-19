@@ -2,9 +2,9 @@ import os
 import random
 import shutil
 
-validation_subset = "validation_russian"
-test_subset = "test_russian"
-train_subset = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield"
+VALIDATION_SUBSET = "validation_russian"
+TEST_SUBSET = "test_russian"
+TRAIN_SUBSET = "RUSSIAN_ALL_TRAFFIC_SPLITTED/yield"
 VALIDATIONPER = 15
 TESTPER = 15
 
@@ -29,21 +29,16 @@ def splitvalidation():
         lenimagelist = len(imagelist)
         randint = random.randint(0,lenimagelist)
         image = imagelist[randint - 1]
-            
         validationumber = validationumber - 1
             
         if ".jpg" in image:
-                
-            imagelist.remove(image)
             imagelist.remove(image.replace(".jpg",".txt"))
-            shutil.move(train_subset + "/" + image, validation_subset)
-            shutil.move(train_subset + "/" + image.replace(".jpg",".txt"),validation_subset)
+        
         else:
-                
-            imagelist.remove(image)
             imagelist.remove(image.replace(".txt",".jpg"))
-            shutil.move(train_subset + "/" + image, validation_subset)
-            shutil.move(train_subset + "/" + image.replace(".txt",".jpg"), validation_subset)
+        
+        shutil.move(TRAIN_SUBSET + "/" + image, VALIDATION_SUBSET)
+        shutil.move(TRAIN_SUBSET + "/" + image.replace(".txt",".jpg"), VALIDATION_SUBSET)
             
             
         f = open("objects_list/" + "validation.txt", "a")
@@ -64,71 +59,25 @@ def splittest():
         image = imagelist[randint - 1]
             
         validationumber = validationumber - 1
+        imagelist.remove(image)
+
         if ".jpg" in image:
-            imagelist.remove(image)
             imagelist.remove(image.replace(".jpg",".txt"))
-            shutil.move(train_subset + "/" + image, test_subset)
-            shutil.move(train_subset + "/" + image.replace(".jpg",".txt"), test_subset)
+           
         else:
-            imagelist.remove(image)
             imagelist.remove(image.replace(".txt",".jpg"))
-            shutil.move(train_subset + "/" + image, test_subset)
-            shutil.move(train_subset + "/" + image.replace(".txt",".jpg"), test_subset)
             
+        shutil.move(TRAIN_SUBSET + "/" + image, TEST_SUBSET)
+        shutil.move(TRAIN_SUBSET + "/" + image.replace(".jpg",".txt"), TEST_SUBSET)
             
         f = open("objects_list/" + "test.txt", "a")
         f.writelines("data/obj/" + image.replace(".txt",".jpg") + "\n")
 
 
-
-def movetrainset():
-    classlist = os.listdir("RUSSIAN_ALL_TRAFFIC_SPLITTED")
-    for class_ in classlist:
-        
-        imagelist = os.listdir("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_)
-        lenimagelist = len(imagelist)
-        trainumber = 3500
-        
-        if(trainumber > lenimagelist/2):
-            moveall(imagelist, class_)
-        else:
-            while(trainumber > 0):
-            
-                lenimagelist = len(imagelist)
-                print("lenlist: " + str(lenimagelist))
-                randint = random.randint(0,lenimagelist)
-                print("randint" + str(randint))
-                image = imagelist[randint - 1]
-
-                trainumber = trainumber - 1
-                if ".jpg" in image:
-                    imagelist.remove(image)
-                    imagelist.remove(image.replace(".jpg",".txt"))
-                    shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image, train_subset)
-                    shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image.replace(".jpg",".txt"), train_subset)
-                else:
-                    imagelist.remove(image)
-                    imagelist.remove(image.replace(".txt",".jpg"))
-                    shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image, train_subset)
-                    shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image.replace(".txt",".jpg"), train_subset)
-            
-
-
-def moveall(imagelist, class_):
-    for image in imagelist:
-        if ".jpg" in image:
-            shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image, train_subset)
-            shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image.replace(".jpg",".txt"), train_subset)
-        
-        else:
-            shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image, train_subset)
-            shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image.replace(".txt",".jpg"), train_subset)
-
-
 if __name__ == "__main__":
     
-    os.mkdir(validation_subset)
-    os.mkdir(test_subset)
+    os.mkdir(VALIDATION_SUBSET)
+    os.mkdir(TEST_SUBSET)
     splitvalidation()
     splittest()
     writetraindata()

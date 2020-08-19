@@ -3,10 +3,10 @@ import shutil
 import cv2
 
 
-originalannotations = "FullIJCNN2013/gt.txt"
-originalimages = "FullIJCNN2013/"
-destimages = "GT_SPLITTED"
-os.mkdir(destimages)
+ORIGNALANNOTATIONS = "FullIJCNN2013/gt.txt"
+ORIGINALIMAGES = "FullIJCNN2013/"
+DESTIMAGES = "GT_SPLITTED"
+
 
 def annotationcalc(source, dest, splitted, signalcode, classcount1):
     
@@ -40,7 +40,8 @@ def annotationcalc(source, dest, splitted, signalcode, classcount1):
 
 
 def mainprog():
-    f = open(originalannotations)
+    os.mkdir(DESTIMAGES)
+    f = open(ORIGNALANNOTATIONS)
     lines = f.readlines()
     classcount1 = [0,0,0]
     listimages = []
@@ -53,21 +54,17 @@ def mainprog():
             splitted = line.split(";")
             signalcode = splitted[5].strip()
             filename = splitted[0].strip()
-        
+            source = ORIGINALIMAGES + filename
+            dest = DESTIMAGES + "/" + filename
 
             if (int(signalcode) >= 0 and int(signalcode)<=8) and j == 0:
             
-                source = originalimages + filename
-                dest = destimages + "/" + filename
                 image = cv2.imread(source)
                 cv2.imwrite(dest.replace(".ppm",".jpg"), image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
                 classcount1 = annotationcalc(source, dest, splitted, signalcode, classcount1)
-            
                 listimages.append(filename)
 
             elif ((filename in listimages) and ((int(signalcode) >= 19 and int(signalcode) <= 31) or (int(signalcode) >= 33 and int(signalcode) <= 40)) and j == 1):
-                source = originalimages + filename
-                dest = destimages + "/" + filename
             
                 image = cv2.imread(source)
                 cv2.imwrite(dest.replace(".ppm",".jpg"), image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
@@ -94,4 +91,5 @@ def classcalculation(signalcode, classcount1):
     
 
 
-mainprog()
+if __name__ == "__main__":
+    mainprog()

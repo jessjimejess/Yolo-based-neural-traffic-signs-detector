@@ -3,8 +3,8 @@ import shutil
 import cv2
 import re
 
-originalimageset = ["TS2010\SourceImages", "TS2011\SourceImages"]
-originalannotations = ["TS2010\SourceImages", "TS2011\SourceImages"]
+ORIGINALIMAGESET = ["TS2010\SourceImages", "TS2011\SourceImages"]
+ORIGINALANNOTATIONS = ["TS2010\SourceImages", "TS2011\SourceImages"]
 
 
 greendir = "TS_SPLITTED"
@@ -83,12 +83,13 @@ def annotationcalc(destino, splitted, classcount):
 
     return classcount
 
+
 def mainprog():
     classcount = [0,0,0,0,0,0]
 
     os.makedirs(greendir)
     
-    for i,annotationd in enumerate(originalannotations):
+    for i,annotationd in enumerate(ORIGINALANNOTATIONS):
 
         f = open(annotationd + "/sources.log")
         lines = f.readlines()
@@ -110,13 +111,10 @@ def mainprog():
                 cv2.imwrite(dest, image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
                 classcount = annotationcalc(dest,annot, classcount)
                 
-                
-    print(classcount)
 
-def mainfunction():
 
+if __name__ == "__main__":
     mainprog()
 
-mainfunction()
 
 
