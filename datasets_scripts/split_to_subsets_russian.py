@@ -9,8 +9,6 @@ VALIDATIONPER = 15
 TESTPER = 15
 
 
-
-
 def writetraindata():
 
         imagelist = os.listdir(train_subset)
@@ -51,6 +49,8 @@ def splitvalidation():
         f = open("objects_list/" + "validation.txt", "a")
         f.writelines("data/obj/" + image.replace(".txt",".jpg") + "\n")
            
+
+        
 def splittest():
     
     
@@ -124,13 +124,12 @@ def moveall(imagelist, class_):
             shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image, train_subset)
             shutil.copy("RUSSIAN_ALL_TRAFFIC_SPLITTED/" + class_ + "/" + image.replace(".txt",".jpg"), train_subset)
 
-def mainfunc():
-    # os.mkdir(train_subset)
+
+if __name__ == "__main__":
+    
     os.mkdir(validation_subset)
     os.mkdir(test_subset)
-    # movetrainset()
     splitvalidation()
     splittest()
     writetraindata()
 
-mainfunc()

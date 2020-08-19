@@ -10,7 +10,6 @@ os.mkdir(destimages)
 
 def annotationcalc(source, dest, splitted, signalcode):
     
-
     img = cv2.imread(source,0)
     height, width = img.shape[:2]
 
@@ -38,10 +37,6 @@ def annotationcalc(source, dest, splitted, signalcode):
 
 
 
-
-
-
-
 def mainprog():
     f = open(originalannotations)
     lines = f.readlines()
@@ -65,8 +60,9 @@ def mainprog():
             cv2.imwrite(dest.replace(".png",".jpg"), image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
             annotationcalc(source, dest, splitted, signalcode)
     
-
     print(classcount1)
+
+
 
 def classcalculation(signalcode):
     if signalcode == "stop":
@@ -75,5 +71,5 @@ def classcalculation(signalcode):
     return class_
     
 
-
-mainprog()
+if __name__ == "__main__":
+    mainprog()

@@ -74,8 +74,6 @@ def annotationcalc(destino, splitted, classcount):
 
         framewidth = (x2 - x1)/WIDTH
         frameheigth = (y2 - y1)/HEIGHT
-
-
         do, class_, classcount = writetxt(annotation, destino, classcount)
         
         if do == 1:
