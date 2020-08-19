@@ -9,34 +9,27 @@ DESTIMAGES = "GT_SPLITTED"
 
 
 def annotationcalc(source, dest, splitted, signalcode, classcount1):
-    
-
     img = cv2.imread(source,0)
     height, width = img.shape[:2]
 
-    print(height, width)
-
     x1 = int(splitted[1])
     x2 = int(splitted[3])
-
     y1 = int(splitted[2])
     y2 = int(splitted[4])
 
     absheight = (y2 - y1)/height
     abswidth = (x2 - x1)/width
-
     centerx = (x2 + x1)/2
     centery = (y2 + y1)/2
-
     absx = centerx/width
     absy = centery/height
-
 
     class_, classcount1 = classcalculation(signalcode, classcount1)
     f = open(dest.replace(".ppm",".txt"),"a")
     f.write(str(class_) + " " + str(absx) + " " + str(absy) + " " + str(abswidth) + " " + str(absheight) + "\n")
 
     return classcount1
+
 
 
 def mainprog():
@@ -70,7 +63,7 @@ def mainprog():
                 cv2.imwrite(dest.replace(".ppm",".jpg"), image, [int(cv2.IMWRITE_JPEG_QUALITY), 100])
                 classcount1 = annotationcalc(source, dest, splitted, signalcode,classcount1)
 
-    print(classcount1)
+  
 
 def classcalculation(signalcode, classcount1):
     if int(signalcode) >= 0 and int(signalcode)<=8:
@@ -85,8 +78,6 @@ def classcalculation(signalcode, classcount1):
         class_ = 2
         classcount1[1] = classcount1[1] + 1
     
-
-
     return class_, classcount1
     
 

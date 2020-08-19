@@ -11,9 +11,10 @@ os.makedirs("RUSSIAN_ALL_TRAFFIC_SPLITTED/yield")
 imcodes = ["5_19_1","3_24_n10","3_24_n20","3_24_n30","3_24_50","3_24_n40","3_24_n60","3_24_n70","3_24_n80","3_24_n90",
             "3_24_n100","2_4", "2_5","4_2_1","4_2_2","4_2_3","4_2_4","4_2_5","4_1_1","4_1_2","4_1_3","4_1_4","4_1_5"]
 
-def annotationcalc(source, dest, splitted, signalcode):
-    
 
+
+
+def annotationcalc(source, dest, splitted, signalcode):
     img = cv2.imread(source,0)
     height, width = img.shape[:2]
 
@@ -28,13 +29,10 @@ def annotationcalc(source, dest, splitted, signalcode):
     x2 = x1 + framewidth
     y1 = fromy
     y2 = y1 + frameheight
-
     absx = (x1 + x2)/2.
     absy = (y1 + y2)/2.
-
     frame_x = absx/width
     frame_y = absy/height
-
     absheight = frameheight/height
     abswidth = framewidth/width
 
