@@ -22,12 +22,7 @@ def brightup(imgpath, imgpathblur, type_):
             brightlevel = random.randint(50,70)/100
     
         contrast = random.randint(-50,50)
-        for i in range(shape[0]):
-            for j in range(shape[1]):
-                image[i][j][0] = np.clip(image[i][j][0] * brightlevel + contrast, 0, 255)
-                image[i][j][1] = np.clip(image[i][j][1] * brightlevel + contrast, 0, 255)
-                image[i][j][2] = np.clip(image[i][j][2] * brightlevel + contrast, 0, 255)
-
+        image = np.clip(image * brightlevel + contrast, 0, 255)
         cv2.imwrite(imgpathblur.replace(".txt",".jpg") , image) 
         shutil.copy(imgpath, imgpathblur)
     
