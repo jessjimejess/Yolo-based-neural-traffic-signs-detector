@@ -26,7 +26,7 @@ def drawboxes(frame,foundectlist):
     
         leftupcornerx = centerx - (sqwidth / 2)
         leftupcornery = centery - (sqheight / 2)
-
+        
         cv2.rectangle(frame, (int(leftupcornerx), int(leftupcornery)), (int(leftupcornerx) + int(sqwidth), int(leftupcornery) + int(sqheight)), (255, 0, 0), 2)
 
     
