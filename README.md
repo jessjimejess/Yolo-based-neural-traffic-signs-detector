@@ -1,5 +1,5 @@
 # Yolo based traffic signs detector
-RT traffic signs detector sistem based on Yolov3. Model trained with RTSD, GTSDB & LISA datasets.
+RT traffic signs detector system based on Yolov3. Model trained with RTSD, GTSDB & LISA datasets.
 
 Client-Server communication: detection/server.py
 
