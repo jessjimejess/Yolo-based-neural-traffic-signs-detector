@@ -1,10 +1,10 @@
 # Yolo-based-neural-traffic-signs-detector
 RT traffic signs detector sistem based on Yolov3. Model trained with RTSD, GTSDB & LISA datasets.
 
-Client-Server communication:
+Client-Server communication: detection/server.py
 
-Detection functions:
+Detection functions: detection/detector.py
 
-Datasets Scripts:
+Datasets Scripts: datasets_scripts
 
-Training chart script:
+Training chart script: training/draw_chart.py
