@@ -18,26 +18,33 @@ def detectWorker(NET_FILE,W_FILE,threshold,HOST,PORT,imgbuffer, conn):
     net, output_layers = netbuild(NET_FILE, W_FILE)
     time.sleep(5)
     while 1:
+        
         if compressed_image != b"":
             stringimg = compressed_image
             dd = zlib.decompressobj().decompress(stringimg)
             data = numpy.fromstring(dd, dtype='uint8').reshape(416, 416, 3)  #Change for image size
             detection(net, output_layers, data, threshold)
             
+            
 
 def receiveAndDetect(conn):
         
     while True:
-        imgsize = conn.recv(16)
-        stringimg = conn.recv(int(imgsize))
-        print(stringimg)    
-        while len(stringimg) < int(imgsize):
-            img = conn.recv(int(imgsize))
-            stringimg += img
+        try:
+
+            imgsize = conn.recv(16)
+            stringimg = conn.recv(int(imgsize))  
+            while len(stringimg) < int(imgsize):
+                img = conn.recv(int(imgsize) - len(stringimg))
+                stringimg += img
                 
-        global compressed_image
-        compressed_image = stringimg
-        conn.sendall(b"received")
+            global compressed_image
+            compressed_image = stringimg
+        
+        except Exception as e:
+            print(e)
+            
+
 
 
 

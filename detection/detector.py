@@ -44,7 +44,7 @@ def detection(net, output_layers, frame, threshold):
     net.setInput(imgcut)
     layer_outputs = net.forward(output_layers)
     
-   
+    
     # thread = threading.Thread(target=thread, args=(layer_outputs))
     
     for output in layer_outputs:
@@ -66,7 +66,7 @@ def detection(net, output_layers, frame, threshold):
 
 # ---- Testing ---- #
 if __name__ == "__main__":
-
+    
 
     NET_FILE = "C:/darknet/build/darknet/x64/custom/yolov3.cfg"
     W_FILE = "C:/darknet/build/darknet/x64/backup/yolov3_last.weights"
