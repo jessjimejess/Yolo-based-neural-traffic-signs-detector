@@ -7,3 +7,5 @@ detection/yolo_files/yolov3.cfg
 *.jpg
 *.pyc
 *.mp4
+detection/yolo_files/yolov3_6000.weights
+detection/yolo_files/obj.names
