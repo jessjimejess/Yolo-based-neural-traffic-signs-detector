@@ -19,7 +19,7 @@ def netbuild(NET_FILE, W_FILE, O_FILE):
 
     return net, output_layers, colourlist
 
-def drawboxes(frame,foundectlist, colourlist):
+def drawboxes(frame,foundectlist, colourlist, starttime):
     height, width = frame.shape[:2]
     
     for detection in foundectlist:
@@ -33,20 +33,19 @@ def drawboxes(frame,foundectlist, colourlist):
         colour = colourlist[int(detection["classid"])]
         cv2.rectangle(frame, (int(leftupcornerx), int(leftupcornery)), (int(leftupcornerx) + int(sqwidth), int(leftupcornery) + int(sqheight)), (int(colour[0]), int(colour[1]), int(colour[2])), 2)
         
+    fps = int(1 / (time.time() - starttime)) + 1
+    image = cv2.putText(frame, "FPS:" + str(fps), (50, 50) , cv2.FONT_HERSHEY_SIMPLEX ,  1, (255, 0, 0) , 2, cv2.LINE_AA) 
     cv2.imshow("polc", frame)
-    cv2.waitKey(1) 
+    cv2.waitKey(1)
     
 
-def detection(net, output_layers, frame, threshold, colourlist):
-  
+def detection(net, output_layers, frame, threshold, colourlist, starttime):
+    
     dectdict = {}
     foundectlist = []
-
     imgcut = cv2.dnn.blobFromImage(frame, 1 / 255.0, (416, 416),swapRB=True, crop=False)
-    
     net.setInput(imgcut)
     layer_outputs = net.forward(output_layers)
-    
     
     for output in layer_outputs:
         
@@ -60,9 +59,13 @@ def detection(net, output_layers, frame, threshold, colourlist):
                 dectdict = {"classid": class_id, "centerx":detection[0], "centery":detection[1], "sqwidth":detection[2], "sqheight":detection[3]}
                 foundectlist.append(dectdict)
     
-    drawboxes(frame,foundectlist, colourlist)
-    return str(foundectlist)
-    
+    drawboxes(frame,foundectlist, colourlist , starttime)
+    if len(foundectlist) != 0:
+        return str(foundectlist)
+    else:
+        return b''
+        
+
 
 # ---- Testing ---- #
 if __name__ == "__main__":
