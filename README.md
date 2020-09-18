@@ -1,5 +1,5 @@
 # Yolo based traffic signs detector
-Deep Learning RT traffic signs detector system based on Yolov3. Model trained with RTSD, GTSDB & LISA datasets. This project uses a RPi as client which send images to a server, which have implemented the neural network.
+Deep Learning RT traffic signs detector system based on Yolov3. Model trained with RTSD, GTSDB & LISA datasets (94% accuracy). This project uses a RPi as client which send images to a server, which have implemented the neural network.
 
 This projects also uses OpenCV dnn module for network implementation.
 
