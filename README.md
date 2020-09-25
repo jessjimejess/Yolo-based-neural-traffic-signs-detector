@@ -3,6 +3,11 @@ Deep Learning RT traffic signs detector system based on Yolov3. Model trained wi
 
 This projects also uses OpenCV dnn module for network implementation.
 
+![Alt Text](https://media.giphy.com/media/vFKqnCdLPNOKc/giphy.gif)
+
+
+
+
 Full example:
 https://www.youtube.com/watch?v=z-ftn4ORei0
 
